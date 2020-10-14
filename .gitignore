@@ -130,3 +130,9 @@ dmypy.json
 
 #ipip local db file
 .ipdb
+
+# csv result file
+.csv
+
+# txt input file
+.txt
