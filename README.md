@@ -1,12 +1,12 @@
 # iplocation
 批量查询ip归属地
 
-内置4种可选查询方式
+支持4种查询方式,默认最终输出csv文件
 
 - 百度api(默认)
 - ip.cn api(已不可用)
 - ipip.net 免费接口(单ip日限1000,可使用代理)
-- ipip.net 本地数据库文件
+- ipip.net 本地ipdb数据库文件(使用时将数据库文件置于同目录下)
 
 ```
 get_ip_location.py -h
@@ -25,7 +25,7 @@ optional arguments:
 使用示例:
 
 ```
-get_ip_location.py -f ip.txt  -s 1 -p http://127.0.0.1:1080
+get_ip_location.py -f ip.txt  -s 1 -p http://127.0.0.1:1080  -o iplocation.csv
 ```
 
 

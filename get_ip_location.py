@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding=utf-8 -*-
 # ip获取归属地
-# date:2019-10-15
+# date:2020-10-15
 # base on python3
 # To use socks5 proxy,you need update the requests library: python -m pip install -U requests[socks]
 
@@ -15,14 +15,14 @@ import requests
 requests.packages.urllib3.disable_warnings()
 
 """
-默认使用接口1,但如追求精度,可使用接口3;如有更新ipip本地数据库则建议优先用接口4，兼顾精度和速度.
+默认使用接口1,但如追求精度,可使用接口3;如有ipip本地数据库则建议优先用接口4，兼顾精度和速度.
 """
 ip_query_sources_api={"1":"baidu_ip_api","2":"ip_cn_api","3":"ipip_free_api","4":"ipip_local_db_file_api"}
 headers_curl={"User-Agent": "curl/7.63.0"}
 headers={
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36"
 }
-# ipip本地ip数据库文件
+# ipip.net 本地.ipdb数据库
 db=None
 
 def init_ipip_local_db_file():
@@ -42,7 +42,7 @@ def init_ipip_local_db_file():
         print("not any ipip local db file found!")
     return False
 
-def main(target_file,query_source_select='1',proxy={}):
+def main(target_file,outputfile,query_source_select='1',proxy={}):
     start_time=time.time()
     ips=[]
     results=[]
@@ -69,11 +69,12 @@ def main(target_file,query_source_select='1',proxy={}):
         print(result)
         results.append(result)
     pass
-    with open(r"locations.csv","w") as fo:
+    with open(outputfile,"w") as fo:
         for x in results:
             fo.write(x+"\n")
     end_time=time.time()
     print("\n{}\nfinished in {}s".format("-"*20,round(end_time-start_time,2)))
+    print("result saved to {}……".format(outputfile))
 
 
 
@@ -135,6 +136,7 @@ if __name__ == '__main__':
     parser.add_argument('-f', '--file', dest='file', default='ip.txt', help='ip input file')
     parser.add_argument('-s', '--source ', dest='source', default='1', help='ip location query source api:1.baidu;2.ip.cn;3.ipip free;4.ipip local db file')
     parser.add_argument('-p', '--proxy ', dest='proxy', default='', help='api requets proxy:http/socks5')
+    parser.add_argument('-o', '--outputfile ', dest='outputfile', default='locations.csv', help='location result outputfile')
     args = parser.parse_args()
     if not os.path.exists(args.file):
         print ('{} not exists! Please input target file!').format(args.file)
@@ -146,4 +148,4 @@ if __name__ == '__main__':
             }
         else:
             proxy={}
-        main(args.file,args.source,proxy)
+        main(args.file,args.outputfile,args.source,proxy)
