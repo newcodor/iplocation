@@ -116,7 +116,7 @@ def ipip_free_api(ip,proxy={}):
         pass
     return ""
 
-#接口4：ipip本地数据库 mydata4vipday3_cn.ipdb 版本日期 2020.2.27,精度可与接口3相比，但是受版本更新限制
+#接口4：ipip本地.ipdb格式数据库,精度可与接口3相比，但是受版本更新限制
 def ipip_local_db_file_api(ip,proxy={},country="CN"):
     if db:
         # print(db.is_ipv4())
