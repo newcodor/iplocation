@@ -1,6 +1,14 @@
 # iplocation
 批量查询ip归属地
 
+内置4种可选查询方式
+
+- 百度api(默认)
+- ip.cn api(已不可用)
+- ipip.net 免费接口(单ip日限1000,可使用代理)
+- ipip.net 本地数据库文件
+
+```
 get_ip_location.py -h
 usage: get_ip_location.py [-h] [-f FILE] [-s SOURCE] [-p PROXY]
 
@@ -12,10 +20,13 @@ optional arguments:
                         free;4.ipip local db file
   -p PROXY, --proxy  PROXY
                         api requets proxy:http/socks5
+```
 
-内置4种可选查询方式
+使用示例:
 
-- 百度api
-- ip.cn api(已不可用)
-- ipip.net 免费接口(单ip日限1000,可使用代理)
-- ipip.net 本地数据库文件
+```
+get_ip_location.py -f ip.txt  -s 1 -p http://127.0.0.1:1080
+```
+
+
+
