@@ -6,7 +6,7 @@
 - 百度api(默认)
 - ip.cn api(已不可用)
 - ipip.net 免费接口(单ip日限1000,可使用代理)
-- ipip.net 本地ipdb数据库文件(使用时将数据库文件置于同目录下)
+- ipip.net 本地ipdb、datx数据库文件(datx是老的文件格式,建议使用ipdb格式文件,使用时将数据库文件置于同目录下j即可)
 
 ```
 get_ip_location.py -h

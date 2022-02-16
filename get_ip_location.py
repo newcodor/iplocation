@@ -27,7 +27,7 @@ headers_curl={"User-Agent": "curl/7.63.0"}
 headers={
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36"
 }
-# ipip.net 本地.ipdb数据库
+# ipip.net 本地.ipdb、.datx数据库
 db=None
 db_file_type=""
 
