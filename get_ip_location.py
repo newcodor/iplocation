@@ -10,9 +10,14 @@ import os
 import time
 import json
 import ipdb
+import datx
 import argparse
 import requests
 requests.packages.urllib3.disable_warnings()
+
+#  python -m pip install ipip-datx
+#  python -m pip install ipip-ipdb,if use python2.x or before 3.3,also should python -m  pip install ipaddress
+
 
 """
 默认使用接口1,但如追求精度,可使用接口3;如有ipip本地数据库则建议优先用接口4，兼顾精度和速度.
@@ -24,14 +29,23 @@ headers={
 }
 # ipip.net 本地.ipdb数据库
 db=None
+db_file_type=""
 
 def init_ipip_local_db_file():
-    global db
-    ipip_local_db_files=[file for file in os.listdir() if file.endswith(".ipdb")]
+    global db,db_file_type
+    ipip_local_db_files=[file for file in os.listdir() if file.endswith(".ipdb")  or file.endswith(".datx")]
     if len(ipip_local_db_files)>0:
         ipip_local_db_file=ipip_local_db_files[0]
         try:
-            db=ipdb.City(ipip_local_db_file)
+            db=None
+            if ipip_local_db_file.endswith(".ipdb"):
+                db=ipdb.City(ipip_local_db_file)
+                db_file_type="ipdb"
+            elif ipip_local_db_file.endswith(".datx"):
+                db=datx.City(ipip_local_db_file)
+                db_file_type="datx"
+            else:
+                return False
             print("load ipip local db file: {}".format(ipip_local_db_file))
             return True
             pass
@@ -120,15 +134,18 @@ def ipip_free_api(ip,proxy={}):
 #接口4：ipip本地.ipdb格式数据库,精度可与接口3相比，但是受版本更新限制
 def ipip_local_db_file_api(ip,proxy={},country="CN"):
     if db:
-        # print(db.is_ipv4())
-        # print(db.build_time())
-        location_infos=db.find_map(ip, country)
-        # print(location_info["city_name"]+location_info["isp_domain"])
-        location=location_infos["city_name"]+location_infos["isp_domain"]
+        if db_file_type=="ipdb":
+            # print(db.is_ipv4())
+            # print(db.build_time())
+            location_infos=db.find_map(ip, country)
+            # print(location_info["city_name"]+location_info["isp_domain"])
+            location=location_infos["city_name"]+location_infos["isp_domain"]
+        elif db_file_type=="datx":
+            locations=(list)(db.find(ip))
+            location="{}{}{}".format(locations[0],locations[1],locations[2],locations[4])
         location=location.replace("阿里云/电信/联通/移动/铁通/教育网","阿里云")
         return location
-    else:
-        return ""
+    return ""
     pass
 
 if __name__ == '__main__':
