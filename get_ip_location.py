@@ -92,11 +92,10 @@ def main(target_file,outputfile,query_source_select='1',proxy={}):
 
 
 
-#接口1：https://sp0.baidu.com/8aQDcjqpAAV3otqbppnN2DJv/api.php?query=223.99.173.5&co=&resource_id=6006&t=1555296645505&ie=utf8&oe=gbk&cb=op_aladdin_callback&format=json&tn=baidu&cb=jQuery1102033277190464606443_1555296628953&_=1555296628956
-#但会把青岛阿里云识别为浙江阿里云
+#接口1：https://sp0.baidu.com/8aQDcjqpAAV3otqbppnN2DJv/api.php?query=223.99.173.5&co=&resource_id=5809&t=1555296645505&ie=utf8&oe=gbk&cb=op_aladdin_callback&format=json&tn=baidu&cb=jQuery1102033277190464606443_1555296628953&_=1555296628956
 def baidu_ip_api(ip,proxy={}):
     try:
-        jres=requests.get("https://sp0.baidu.com/8aQDcjqpAAV3otqbppnN2DJv/api.php?query={}&co=&resource_id=6006&t=1555296645505&ie=utf8&oe=gbk&cb=op_aladdin_callback&format=json&tn=baidu&cb=jQuery1102033277190464606443_1555296628953&_=1555296628956".format(ip),headers=headers,proxies=proxy,verify=False)
+        jres=requests.get("https://sp0.baidu.com/8aQDcjqpAAV3otqbppnN2DJv/api.php?query={}&co=&resource_id=5809&t=1555296645505&ie=utf8&oe=gbk&cb=op_aladdin_callback&format=json&tn=baidu&cb=jQuery1102033277190464606443_1555296628953&_=1555296628956".format(ip),headers=headers,proxies=proxy,verify=False)
         item=json.loads((re.findall(r"\((.*)\)",jres.text))[0])
         location=item["data"][0]["location"].replace(" ","")
         return location
@@ -104,6 +103,7 @@ def baidu_ip_api(ip,proxy={}):
     except Exception as e:
         pass
     return ""
+
 
 #接口2：https://ip.cn?ip=
 #速度尚可，但目前该接口已不可用
